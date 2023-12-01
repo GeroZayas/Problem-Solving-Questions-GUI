@@ -53,14 +53,23 @@ for i, question in enumerate(questions, 1):
     ]
 layout += [
     [
-        sg.Button("Submit", font=font_style),
-        sg.Button("Save Responses", font=font_style),
-        sg.Button("Close", font=font_style, button_color=colors["close_button"]),
+        sg.Column(
+            [
+                [
+                    sg.Button("Submit", font=font_style),
+                    sg.Button("Save Responses", font=font_style),
+                    sg.Button(
+                        "Close", font=font_style, button_color=colors["close_button"]
+                    ),
+                ]
+            ],
+            justification="right",
+        )
     ]
 ]
 
 # Create the Window
-window = sg.Window("Survey Application", layout)
+window = sg.Window("Problem-Solving Questions - Tony Robbins", layout)
 
 # Event loop
 while True:
