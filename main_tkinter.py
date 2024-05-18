@@ -12,7 +12,7 @@ colors = {
 window = tk.Tk()
 window.title("Problem-Solving Questions - Tony Robbins")
 window.configure(bg=colors["background"])
-window.geometry("1000x1000")  # Fixed window size
+window.geometry("910x855")  # Fixed window size
 window.resizable(False, False)  # Disable window resizing
 
 
@@ -31,13 +31,13 @@ questions = [
 problem_label = tk.Label(
     window,
     text="What is the problem?",
-    font=font_style,
-    fg=colors["text"],
-    bg=colors["background"],
+    font=("Liberation", 16),
+    fg="darkred",
+    bg="white",
 )
-problem_label.grid(row=0, column=0, padx=5, pady=5, columnspan=2)
+problem_label.grid(row=0, column=0, padx=5, pady=5, columnspan=1)
 problem_entry = tk.Text(window, height=2, font=font_style)
-problem_entry.grid(row=1, column=0, padx=5, pady=5, columnspan=2)
+problem_entry.grid(row=1, column=0, padx=5, pady=5, columnspan=1, sticky="ew")
 
 
 # Questions entries
@@ -52,7 +52,7 @@ for i, question in enumerate(questions, 1):
     )
     question_label.grid(row=i * 2, column=0, padx=5, pady=5, sticky="w")
     question_text_entry = tk.Text(window, height=3, font=font_style)
-    question_text_entry.grid(row=i * 2 + 1, column=0, padx=5, pady=5)
+    question_text_entry.grid(row=i * 2 + 1, column=0, padx=5, pady=5, sticky="ew")
     questions_text_entries.append(question_text_entry)
 
 
@@ -70,7 +70,7 @@ def save_responses():
     separator = "-" * 70
     if save_path:
         with open(save_path, "w") as file:
-            file.write(f"What is the problem?\n{separator}n{responses['Problem']}\n\n")
+            file.write(f"What is the problem?\n{separator}\n{responses['Problem']}\n\n")
             for i, question in enumerate(questions, 1):
                 response = responses.get(f"Q{i}", "").strip()
                 file.write(f"{question}\n{separator}\n{response}\n\n")
@@ -82,7 +82,11 @@ save_responses_button = tk.Button(
     window, text="Save Responses", font=font_style, command=save_responses
 )
 save_responses_button.grid(
-    row=len(questions) * 2 + 2, column=0, padx=5, pady=5, columnspan=2
+    row=len(questions) * 2 + 2,
+    column=0,
+    padx=5,
+    pady=5,
+    columnspan=1,
 )
 
 # Close button
@@ -94,6 +98,10 @@ close_button = tk.Button(
     bg=colors["close_button"][1],
     command=window.quit,
 )
-close_button.grid(row=len(questions) * 2 + 2, column=2, padx=5, pady=5)
+close_button.grid(row=len(questions) * 2 + 3, column=0, padx=5, pady=5)
+
+# Centering all widgets
+for child in window.winfo_children():
+    child.grid_configure(padx=10, pady=4)
 
 window.mainloop()
